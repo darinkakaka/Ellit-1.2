@@ -70,6 +70,84 @@ public class funPlan {
             }
         }
     }
+   
+
+public class MenuCliente {
+
+    public static void mostrar() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("\n=== MENÚ usuario ===");
+            System.out.println("1. Ver todos los planes disponibles");
+            System.out.println("2. Consultar plan por ID");
+            System.out.println("3. Cambiar objetivo de un plan");
+            System.out.println("4. Ver comidas de un plan nutricional");
+            System.out.println("0. Salir");
+            System.out.print("Selecciona una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    verTodosLosPlanes();
+                    break;
+                case 2:
+                    consultarPlanPorId(scanner);
+                    break;
+                case 3:
+                    actualizarObjetivo(scanner);
+                    break;
+                case 4:
+                    verComidasDePlan(scanner);
+                    break;
+                case 0:
+                    System.out.println("Gracias por usar el sistema.");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcion != 0);
+    }
+
+    private static void verTodosLosPlanes() {
+        crudplanNut crud = new crudplanNut();
+        crud.consulta();
+    }
+
+    private static void consultarPlanPorId(Scanner scanner) {
+        System.out.print("Ingresa el ID del plan: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        crudplanNut crud = new crudplanNut();
+        crud.consultaPorId(id);
+    }
+
+    private static void actualizarObjetivo(Scanner scanner) {
+        System.out.print("ID del plan: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Nuevo objetivo: ");
+        String nuevoObjetivo = scanner.nextLine();
+
+        crudplanNut crud = new crudplanNut();
+        crud.actualizarObjetivo(id, nuevoObjetivo);
+        System.out.println("Objetivo actualizado.");
+    }
+
+    private static void verComidasDePlan(Scanner scanner) {
+        System.out.print("Ingresa el ID del plan para ver sus comidas: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        crudPlanComidas crudComidas = new crudPlanComidas();
+        crudComidas.verComidasPorPlan(id);
+    }
+}
+
 
     public static void altaPlan() {
         String nombre, objetivo, recomendaciones, descripcion;
